@@ -44,10 +44,17 @@ const {
 // car.call()
 // console.log(calls)
 
+// const car = new AsyncSeriesHook()
+// car.tap('1', () => { console.log(1) })
+// car.tapAsync('4', callback => { setTimeout(() => { console.log('1s后', 4); callback() }, 1000) })
+// car.tap('3', () => console.log(3))
+// car.callAsync(err => { if (err) throw new Error(err); })
+
 const car = new AsyncSeriesHook()
 car.tap('1', () => { console.log(1) })
-car.tapAsync('2', callback => { setTimeout(() => { console.log('1s后', 2); callback() }, 1000) })
-car.tap('3', () => { console.log(3) })
-car.callAsync(() => {})
+car.tapPromise('2', () => new Promise(r => { console.log('promise2'); r()}))
+car.tapAsync('4', callback => { setTimeout(() => { console.log('1s后', 4); callback() }, 1000) })
+car.tap('3', () => console.log(3))
+car.promise()
 
 
