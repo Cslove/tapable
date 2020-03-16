@@ -4,6 +4,7 @@ const {
 	SyncBailHook,
 	SyncLoopHook,
 	AsyncSeriesHook,
+	AsyncSeriesBailHook,
 } = require('./lib')
 
 // const car = new SyncWaterfallHook(['hello'])
@@ -50,11 +51,18 @@ const {
 // car.tap('3', () => console.log(3))
 // car.callAsync(err => { if (err) throw new Error(err); })
 
-const car = new AsyncSeriesHook()
+// const car = new AsyncSeriesHook()
+// car.tap('1', () => { console.log(1) })
+// car.tapPromise('2', () => new Promise(r => { console.log('promise2'); r()}))
+// car.tapAsync('4', callback => { setTimeout(() => { console.log('1s后', 4); callback() }, 1000) })
+// car.tap('3', () => console.log(3))
+// car.promise()
+
+const car = new AsyncSeriesBailHook()
 car.tap('1', () => { console.log(1) })
 car.tapPromise('2', () => new Promise(r => { console.log('promise2'); r()}))
-car.tapAsync('4', callback => { setTimeout(() => { console.log('1s后', 4); callback() }, 1000) })
+car.tapAsync('4', callback => { setTimeout(() => { console.log('1s后', 4); callback(null, 'callback finish') }, 1000) })
 car.tap('3', () => console.log(3))
-car.promise()
+car.promise().then(v => console.log(v), err => console.log(err))
 
 
