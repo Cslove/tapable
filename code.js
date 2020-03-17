@@ -11,71 +11,55 @@ _reject(_err);
 };
 var _context;
 var _x = this._x;
-function _next2() {
-var _fn3 = _x[3];
-var _hasError3 = false;
-try {
-var _result3 = _fn3();
-} catch(_err) {
-_hasError3 = true;
-_error(_err);
-}
-if(!_hasError3) {
-if(_result3 !== undefined) {
-_resolve(_result3);
-
-} else {
+do {
+var _counter = 3;
+var _done = () => {
 _resolve();
-}
-}
-}
-function _next1() {
-var _fn2 = _x[2];
-_fn2((_err2, _result2) => {
-if(_err2) {
-_error(_err2);
-} else {
-if(_result2 !== undefined) {
-_resolve(_result2);
-
-} else {
-_next2();
-}
-}
-});
-}
+};
+if(_counter <= 0) break;
 var _fn0 = _x[0];
 var _hasError0 = false;
 try {
-var _result0 = _fn0();
+_fn0();
 } catch(_err) {
 _hasError0 = true;
+if(_counter > 0) {
 _error(_err);
+_counter = 0;
+}
 }
 if(!_hasError0) {
-if(_result0 !== undefined) {
-_resolve(_result0);
-
-} else {
+if(--_counter === 0) _done();
+}
+if(_counter <= 0) break;
 var _fn1 = _x[1];
-var _hasResult1 = false;
-var _promise1 = _fn1();
-if (!_promise1 || !_promise1.then)
-  throw new Error('Tap function (tapPromise) did not return promise (returned ' + _promise1 + ')');
-_promise1.then(_result1 => {
-_hasResult1 = true;
-if(_result1 !== undefined) {
-_resolve(_result1);
-
-} else {
-_next1();
-}
-}, _err1 => {
-if(_hasResult1) throw _err1;
+_fn1(_err1 => {
+if(_err1) {
+if(_counter > 0) {
 _error(_err1);
+_counter = 0;
+}
+} else {
+if(--_counter === 0) _done();
+}
 });
+if(_counter <= 0) break;
+var _fn2 = _x[2];
+var _hasResult2 = false;
+var _promise2 = _fn2();
+if (!_promise2 || !_promise2.then)
+  throw new Error('Tap function (tapPromise) did not return promise (returned ' + _promise2 + ')');
+_promise2.then(_result2 => {
+_hasResult2 = true;
+if(--_counter === 0) _done();
+}, _err2 => {
+if(_hasResult2) throw _err2;
+if(_counter > 0) {
+_error(_err2);
+_counter = 0;
 }
-}
+});
+} while(false);
 _sync = false;
 });
 
